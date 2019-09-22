@@ -54,6 +54,8 @@
 
     <script src="js/lib/jquery-1.12.4.min.js"></script>
     <script src="js/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="js/utils/user.js"></script>
     <script>
         // 给btn添加点击事件
         $('#btnLogin').click(function () {
@@ -69,25 +71,38 @@
                 // alert('请输入账号密码');
                 return;
             }
-            // 发ajax请求
-            $.post('http://localhost:8000/admin/login', {
-                user_name: userName,
-                password: password
-            }, function (res) {
+            // 用户登录
+            user.login(userName, password, function (res) {
                 console.log(res);
+
                 if (res.code == 200) {
-                    // alert('登录成功，页面正在跳转中...');
                     // 跳转页面
                     window.location.href = 'index.html'
                 } else {
-                    // alert(res.msg);
-
                     $('#pResult').text(res.msg);
                     $('.modal').modal('show');
                 }
+            });
+
+            // 发ajax请求
+            // $.post('http://localhost:8000/admin/login', {
+            //     user_name: userName,
+            //     password: password
+            // }, function (res) {
+            //     console.log(res);
+            //     if (res.code == 200) {
+            //         // alert('登录成功，页面正在跳转中...');
+            //         // 跳转页面
+            //         window.location.href = 'index.html'
+            //     } else {
+            //         // alert(res.msg);
+
+            //         $('#pResult').text(res.msg);
+            //         $('.modal').modal('show');
+            //     }
 
 
-            })
+            // })
         })
     </script>
 </body>
