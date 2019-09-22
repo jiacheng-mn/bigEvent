@@ -8,7 +8,7 @@ var user = {
      */
     login: function (userName, password, callBack) {
         // 发ajax请求
-        $.post('http://localhost:8000/admin/login', {
+        $.post(URL_list.user_login, {
             user_name: userName,
             password: password
         }, function (res) {
@@ -21,7 +21,7 @@ var user = {
      * @param {*} callBack 回调函数
      */
     logout: function (callBack) {
-        $.post('http://localhost:8000/admin/logout', function (res) {
+        $.post(URL_list.user_logout, function (res) {
             callBack(res);
         });
     },
@@ -30,7 +30,7 @@ var user = {
      * @param {*} callBack 回调函数
      */
     getInfo: function (callBack) {
-        $.get('http://localhost:8000/admin/getuser', function (res) {
+        $.get(URL_list.user_getInfo, function (res) {
             callBack(res);
         })
     }
