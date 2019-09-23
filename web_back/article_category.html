@@ -61,11 +61,14 @@
                     <form>
                         <div class="form-group">
                             <label for="recipient-name" class="control-label">分类名称:</label>
-                            <input type="text" class="form-control" id="recipient-name">
+                            <input type="text" class="form-control" id="categoryName">
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">分类别名:</label>
-                            <input type="text" class="form-control" id="recipient-name">
+                            <input type="text" class="form-control" id="categorySlug">
+                        </div>
+                        <div style="display: none" id="divResult" class="alert alert-danger" role="alert">
+                            Content
                         </div>
                     </form>
                 </div>
@@ -88,10 +91,10 @@
             $('#addModal').modal('hide');
         });
 
-        $('#model_add').click(function () {
-            alert('add');
-            $('#addModal').modal('hide');
-        });
+        // $('#model_add').click(function () {
+        //     alert('add');
+        //     $('#addModal').modal('hide');
+        // });
 
         $('.category_table').delegate('a', 'click', function () {
             if ($(this).hasClass('btn-info')) {
@@ -107,12 +110,12 @@
     <script id="tmp" type="text/html">
         {{each data item}}
         <tr>
-            <td>{{name}}</td>
-            <td>{{slug}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.slug}}</td>
             <td class="text-center">
                 <a href="javascript:editTr({&quot;id&quot;:&quot;2&quot;,&quot;slug&quot;:&quot;funny&quot;,&quot;name&quot;:&quot;奇趣事&quot;});"
                     class="btn btn-info btn-xs">编辑</a>
-                <a href="javascript:deleteTr( 2 );" class="btn btn-danger btn-xs">删除</a>
+                <a href="javascript:deleteTr({{item.id}});" class="btn btn-danger btn-xs">删除</a>
             </td>
         </tr>
         {{/each}}
@@ -121,18 +124,66 @@
 
 
     <script>
-        // 入口函数
-        $(function () {
+        // 封装函数，查询
+        function doQuery() {
             category.show(function (res) {
-                console.log(res);
+                // console.log(res);
                 if (res.code === 200) {
-                    // 要 res.data 转成表格中的行
-                    // 1. 循环 +字符串拼接
+                    // 要把 res.data 转成表格中的行
+                    // 1. 循环 + 字符串拼接
                     // 2. 模板引擎
                     var htmlStr = template('tmp', res);
                     $('#tableContent').html(htmlStr);
-                    console.log(htmlStr);
+                    // console.log(htmlStr);
                 }
+            });
+        }
+        // 封装函数，删除
+        function deleteTr(id) {
+            // id：要删除的类型的id
+            if (window.confirm('主人，你确定要删除吗？')) {
+                // alert(id);
+                category.del(id, function () {
+                    console.log(res);
+                    if (res.code === 200) {
+                        doQuery();
+                    }
+
+                })
+            }
+        }
+
+
+        // 入口函数
+        $(function () {
+            // 页面加载的时候，查询一次
+            doQuery();
+
+
+            // 新增
+            // 1.注册点击事件，获取文本框里面的内容，简单判断
+            $('#model_add').click(function () {
+                var name = $('#categoryName').val();
+                var slug = $('#categorySlug').val();
+
+                if (name === "" || slug === "") {
+                    $('#divResult').show().text('分类名和别名不能为空！');
+                    return;
+                }
+                // 2.调方法
+                category.add(name, slug, function (res) {
+                    // console.log(res);
+                    if (res.code === 200) {
+                        // 隐藏模态框
+                        $('#addModal').modal('hide');
+                        // 清空提示
+                        $('#divResult').text('');
+                        // 重新求数据
+                        doQuery();
+                    } else {
+                        $('#divResult').text(res.msg);
+                    }
+                });
             });
         });
     </script>
