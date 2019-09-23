@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- <h4>姓名:jack</h4>
+    <dl>
+        <dt>爱好</dt>
+        <dd>吃饭</dd>
+        <dd>睡觉</dd>
+        <dd>打豆豆</dd>
+    </dl> -->
+</body>
+<script src="template-web.js"></script>
+
+<script type="text/html" id="tmp">
+    <h4>姓名:{{name}}</h4>
+    <dl>
+        <!-- <dt><a>{{title}}</a></dt> -->
+
+        {{each hobby item idx}}
+
+        <dd>{{idx}}<a>{{item}}</a></dd>
+
+        {{/each}}
+
+    </dl>
+</script>
+
+<script>
+    var data = {
+        name: 'jack',
+        // title:'爱好',
+        hobby: ['吃饭', '睡觉', '打豆豆']
+    };
+    var htmlStr = template('tmp', data);
+    console.log(htmlStr);
+</script>
+
+</html>
