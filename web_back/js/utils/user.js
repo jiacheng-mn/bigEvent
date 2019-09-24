@@ -33,5 +33,18 @@ var user = {
         $.get(URL_list.user_getInfo, function (res) {
             callBack(res);
         })
+    },
+
+    editInfo: function (fd, callBack) {
+        $.ajax({
+            type: 'post',
+            data: fd,
+            url: URL_list.user_editInfo,
+            contentType: false,
+            processData: false,
+            success: function (res) {
+                callBack(res);
+            }
+        });
     }
 }

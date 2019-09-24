@@ -7,7 +7,7 @@ var category = {
      * @param {*} callBack 
      */
     show: function (callBack) {
-        $.get('http://localhost:8000/admin/category_search', function (res) {
+        $.get(URL_list.category_show, function (res) {
             callBack(res);
         });
     },
@@ -18,7 +18,7 @@ var category = {
      * @param {*} callBack 
      */
     add: function (name, slug, callBack) {
-        $.post('http://localhost:8000/admin/category_add', { name: name, slug: slug }, function (res) {
+        $.post(URL_list.category_add, { name: name, slug: slug }, function (res) {
             callBack(res);
         });
     },
@@ -28,12 +28,12 @@ var category = {
      * @param {*} callBack 
      */
     del: function (id, callBack) {
-        $.post('http://localhost:8000/admin/category_delete', { id: id }, function () {
+        $.post(URL_list.category_del, { id: id }, function () {
             callBack(res);
         })
     },
     edit: function (id, name, slug, callBack) {
-        $.post('http://localhost:8000/admin/category_edit', {
+        $.post(URL_list.category_edit, {
             id: id, name: name, slug: slug
         }, function () {
             callBack(res);
