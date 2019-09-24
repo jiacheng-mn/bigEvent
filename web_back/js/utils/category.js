@@ -32,5 +32,11 @@ var category = {
             callBack(res);
         })
     },
-    edit: function () { }
+    edit: function (id, name, slug, callBack) {
+        $.post('http://localhost:8000/admin/category_edit', {
+            id: id, name: name, slug: slug
+        }, function () {
+            callBack(res);
+        })
+    }
 }
