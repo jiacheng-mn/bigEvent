@@ -49,7 +49,7 @@
         </form>
         <div class="user_center_link">
             <a href="user.html" onclick="setMenu(3,0)" target="main_frame">个人中心</a>
-            <img src="images/2.jpg" alt="person">
+            <img src="images/2.jpg" id="personalImg" alt="person">
             <a href="javaScript:;" id="btnLogout"><i class="iconfont icon-tuichu"></i> 退出</a>
         </div>
     </div>
@@ -144,13 +144,11 @@
                 if (res.code === 200) {
                     $('#userName').text(res.data.nickname);
                     $('#userImg').prop('src', res.data.user_pic);
+                    $('#personalImg').prop('src', res.data.user_pic);
                 }
 
             });
         });
-
-
-
 
         // 用户退出
         // 1.阻止a标签跳转
@@ -168,6 +166,10 @@
                 }
             })
         })
+
+      
+
+    
     </script>
 </body>
 

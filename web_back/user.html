@@ -81,7 +81,7 @@
             var fd = new FormData($('#myform')[0]);
             user.editInfo(fd, function (res) {
                 if (res.code === 200) {
-                    alert(1);
+                    // alert(1);
                 }
             });
         });
@@ -96,6 +96,7 @@
                 console.log(tmpFilePath);
 
                 // 显示在img
+                
                 $('#previewImg').attr('src', tmpFilePath);
             } else {
                 //
